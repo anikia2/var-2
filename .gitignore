@@ -1,12 +1,60 @@
-# Compiled Object files
-*.slo
-*.lo
-*.o
+#include<iostream>
+using namespace std;
+#define SIZE 10
 
-# Compiled Dynamic libraries
-*.so
 
-# Compiled Static libraries
-*.lai
-*.la
-*.a
+class Stack {
+  int data_[SIZE];
+	int top_;
+	
+
+public:
+	Stack(){
+		top_=0;
+	}
+	
+	void push(int val){
+		if(full()){
+			throw StackError();
+		}
+		data_[top_++]=val;
+	}
+	int pop(void){
+		if(empty()){
+			throw StackError();
+		}
+		return data_[--top_];
+
+	}
+	
+	bool empty(){
+		return top_==0;
+	}
+	bool full(){
+		return top_==SIZE;
+	}
+		
+};
+
+int main(){
+	Stack st;
+	
+	try {
+	for(int i =0;i<SIZE ;i++ ){
+		st.push(i);
+	}
+	st.push(99999);
+	}catch (StackError ex){
+		 cout << "handling stack error in push"<< endl;
+    }
+    try{
+	while(!st.empty()){
+		cout << st.pop() << endl;
+	}
+	int val = st.pop();
+	} catch(StackError ex) {
+	 cout << " handling error in pop ... "<< endl;
+	}
+
+	return 0;
+}
